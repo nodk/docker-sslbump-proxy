@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SQUID_DIR: ${SQUID_DIR}
+        C_ICAP_DIR: ${C_ICAP_DIR}
+#    environment:
+#      SQUID_DATA_DIR: ${SQUID_DATA_DIR}
+#      C_ICAP_DATA_DIR: ${C_ICAP_DATA_DIR}
+    image: nodk/sslbump-proxy:v5.5
+    volumes:
+      - ./c-icap-data/share/c_icap/templates:${C_ICAP_DIR}/share/c_icap/templates
+      - ./c-icap-data/var/log:${C_ICAP_DIR}/var/log
+      - ./c-icap-data/var/run/c-icap:${C_ICAP_DIR}/var/run/c-icap
+      - ./c-icap-data/etc:${C_ICAP_DIR}/etc_copy
+      - ./squid-data/var/lib:${SQUID_DIR}/var/lib
+      - ./squid-data/var/cache:${SQUID_DIR}/var/cache
+      - ./squid-data/etc:${SQUID_DIR}/etc_copy
+      - ./squid-data/ssl:${SQUID_DIR}/ssl
+      - ./startup.sh:/startup.sh

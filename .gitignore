@@ -1,0 +1,4 @@
+squid-data/**
+!squid-data/.gitkeep
+c-icap-data/**
+!c-icap-data/.gitkeep
